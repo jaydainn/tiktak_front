@@ -10,7 +10,7 @@ import Planning from './pages/Planning';
 
 function App() {
   return (
-    <Planning />
+    <Login />
   )
 }
 

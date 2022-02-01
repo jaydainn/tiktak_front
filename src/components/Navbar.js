@@ -10,6 +10,7 @@ const Navbar = () => {
             <Pane flex={1} alignItems="center" display="flex">
                 <Heading size={600}>TikTak</Heading>
                 
+                
             </Pane>
             <Pane>
                 {/* Below you can see the marginRight property on a Button. */}
