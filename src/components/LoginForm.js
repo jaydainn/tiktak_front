@@ -6,13 +6,9 @@ const LoginForm = () => {
 
     const handleLogin = () => {
         let obj = [{username: email , password : password}]
-        fetch('http://localhost:30/token', {
-            
-            method: "post",
-            body: JSON.stringify(obj)
-        })
-        .then((res) => res.json())
-        .then((data) => {console.log(data)})
+       console.log("ok");
+        sessionStorage.setItem("token" , email + ":"  + password);
+        window.location.reload()
     }
 
 
