@@ -1,5 +1,5 @@
 import React , {useState , useEffect , useRef} from "react"
-import {Card , CornerDialog , Button, Heading, Text , Pane, Alert} from "evergreen-ui"
+import {Card , CornerDialog , Button, Heading, Text , Pane, Alert , toaster} from "evergreen-ui"
 
 
 
@@ -25,6 +25,12 @@ const Timer = (props) => {
         if(start){
         const timer =
           seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
+        if(seconds == 0 ){
+            setStart(false)
+            toaster.danger('Time is up!')
+            let audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3")
+            audio.play()
+        }
         return () => {clearInterval(timer);} 
         
         }
