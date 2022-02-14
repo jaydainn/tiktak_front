@@ -1,20 +1,51 @@
-import { Pane, TextInput, Text, Button } from "evergreen-ui"
+import { Pane, TextInput, Text, Button , Spinner  , ThemeProvider, defaultTheme , toaster} from "evergreen-ui"
 import React from "react"
 import {decode as base64_decode, encode as base64_encode} from 'base-64';
+import { AirlineSeatLegroomReducedTwoTone } from "@mui/icons-material";
 
 const LoginForm = () => {
 
+
+    const newTheme = {
+        ...defaultTheme,
+        spinnerColor: "white"
+    }
+    
+
     const handleLogin = () => {
-        let obj = [{username: email , password : password}]
-       console.log("ok");
-        sessionStorage.setItem("token" , email + ":"  + password);
-        window.location.reload()
+        let obj = {username: email , password : password}
+        setClicked(true)
+        fetch("http://127.0.0.1:8000/api/login" , {
+            method: "POST",
+            body: JSON.stringify(obj),
+            headers: {
+                accept: "application/json",
+                "Content-type": "application/json"
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if(data.token != undefined){
+                sessionStorage.setItem("token" , data.token);
+                window.location.href = "/"
+
+            }else{
+                toaster.danger("Wrong email or password.")
+                setClicked(false)
+            }
+        })
+        .catch((err) => console.log(err))
+        
+     
     }
 
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [clicked , setClicked] = React.useState(false)
+    
     return (
+        <ThemeProvider value={newTheme}>
         <Pane display="flex" style={{ flexDirection: "Row", justifyContent: "center", marginTop: "3rem" }}>
 
             <Pane display="flex" style={{ flexDirection: "Column", justifyItems: "center" }}>
@@ -27,12 +58,13 @@ const LoginForm = () => {
 
 
                 <Button onClick={() => { handleLogin() }} appearance="primary">
-                    LogIn
+                   {clicked? <Spinner size={16} style={{Color: "white"}}/> : "LogIn"}
                 </Button>
 
 
             </Pane>
         </Pane>
+        </ThemeProvider>
     )
 
 }

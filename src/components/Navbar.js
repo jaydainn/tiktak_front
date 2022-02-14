@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState  , useEffect} from "react"
 import { Button, Pane, Text, majorScale, Avatar, Heading, Link } from 'evergreen-ui'
 import Timer from "../components/Timer.js"
 
@@ -14,6 +14,16 @@ const Navbar = () => {
         setIsShown(!isShown)
     }
 
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/api/muscles?page=1" ,{
+            headers: {
+                accept: "application/json"
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+    } , [])
 
     return (
         <Pane display="flex" padding={16} background="tint2" borderRadius={3}>
