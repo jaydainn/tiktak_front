@@ -15,7 +15,7 @@ const LoginForm = () => {
     const handleLogin = () => {
         let obj = {username: email , password : password}
         setClicked(true)
-        fetch("http://127.0.0.1:8000/api/login" , {
+        fetch("https://127.0.0.1:8000/api/login" , {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
