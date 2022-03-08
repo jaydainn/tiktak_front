@@ -52,7 +52,7 @@ const Day = (props) => {
                                 }
                             })
                             .then((ctva) => ctva.json())
-                            .then((ctve) => {console.log(ctve) ;let tab = exercises ; tab.push(<Text>{ctve.title}</Text>) ;  setExercises(tab)} )
+                            .then((ctve) => {console.log(ctve) ;let tab = exercises ; tab.push(<Text>{ctve.title}</Text>)   ; setExercises([...exercises, <Text>{ctve.title}</Text> ])} )
                         })
                     })
                 })
