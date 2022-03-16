@@ -1,76 +1,43 @@
-import React, { useEffect , useState } from "react"
-import { Pane, TextInput, Text, Button, Alert, Card, Heading } from "evergreen-ui"
+import React, { useEffect, useState } from "react"
+import { Pane, TextInput, Text, Button, Alert, Card, Heading, Spinner } from "evergreen-ui"
 
 
 const Day = (props) => {
 
-    const [exercises , setExercises] = useState([])
+    
+const [exercises , setExercises] = useState([]);
+
 
     useEffect(() => {
-        fetch("https://127.0.0.1:8000/api/users/11" , {
-            headers: {
-                accept: "application/json",
-                "Content-type": "application/json"
-            }
+        if(props.data != undefined && props.data[props.day.toLowerCase()] != undefined){
+            let tab = []
+        props.data[props.day.toLowerCase()].exerciseInWorkouts[0].exercise.map((ex) => {
+            tab.push(<Text>{ex.title}</Text>)
+            
 
         })
-        .then((res) => res.json())
-        .then((data) => {
-            let r = data.planners[data.planners.length- 1]
-            fetch("https://127.0.0.1:8000"+r , {
-                headers: {
-                    accept: "application/json",
-                "Content-type": "application/json"
-                }
-            })
-            .then((re) => re.json())
-            .then((da) =>  {
-                let a = da[props.day.toLowerCase()]
-                //console.log(a)
-                if(a != undefined ){
-                fetch("https://127.0.0.1:8000" + a , {
-                    headers: {
-                        accept: "application/json",
-                    "Content-type": "application/json"
-                    }
-                } )
-                .then(ans => ans.json())
-                .then(daaaa => {
-                    fetch("https://127.0.0.1:8000" + daaaa.exerciseInWorkouts , {
-                        headers: {
-                            accept: "application/json",
-                        "Content-type": "application/json"
-                        }
-                    })
-                    .then((bla) => bla.json())
-                    .then((tra) => {
-                        tra.exercise.map((ex) => {
-                            fetch("https://127.0.0.1:8000" + ex , {
-                                headers: {
-                                    accept: "application/json",
-                                "Content-type": "application/json"
-                                }
-                            })
-                            .then((ctva) => ctva.json())
-                            .then((ctve) => {console.log(ctve) ;let tab = exercises ; tab.push(<Text>{ctve.title}</Text>)   ; setExercises([...exercises, <Text>{ctve.title}</Text> ])} )
-                        })
-                    })
-                })
+        setExercises(tab)
+    }
+        
 
-                }else{
-                    setExercises(["no"])
-                }
-            })
-        })
-    } , [])
+
+    }, [props.data])
 
 
     return (
-    <Card display="flex" background="tint2" style={{ flexDirection: "Column" , margin: "1Rem" , height: "100%", flex: 1 , justifyContent: "center" , textAlign: "center" , padding: "1Rem" }}>
-    <Heading>{props.day}</Heading>
+        <Card display="flex" background="tint2" style={{ flexDirection: "Column", margin: "1Rem", height: "100%", flex: 1, justifyContent: "center", textAlign: "center", padding: "1Rem" }}>
+            <Heading>{props.day}</Heading>
+            <Card style={{ display: "flex", flex: 1, flexDirection: "Row", justifyContent: "center" }}>
+            {props.loading ? <Spinner></Spinner> : <></>}
+            
+            </Card>
+            <hr />
+            <Card style={{marginTop: "1Rem" , flex: 1 , display: "flex" , flexDirection: "column" , marginBottom: "1Rem"}}>
+            {exercises.length > 0 ? exercises : <></>}
+           </Card>
 
-    {exercises[0] == "no"? <Text> REST DAY</Text> : exercises }
-    
+           {exercises.length > 0 ? <Button>done</Button> : <></>}
+
         </Card>
     )
 
