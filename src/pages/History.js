@@ -1,11 +1,18 @@
 import React from "react"
-import {Heading} from "evergreen-ui"
+import {Heading , Table} from "evergreen-ui"
 
 const History = () => {
 
     return (
         <>
-        <Heading>History</Heading>
+        
+  <Table.Head>
+    <Table.SearchHeaderCell />
+    <Table.TextHeaderCell>Date</Table.TextHeaderCell>
+    <Table.TextHeaderCell>Workout</Table.TextHeaderCell>
+  </Table.Head>
+  
+
         </>
     )
 }
