@@ -11,7 +11,7 @@ const [data , setData] = useState(null)
 
 
     useEffect(() => {
-        fetch("https://127.0.0.1:8000/api/users/11" , {
+        fetch("https://127.0.0.1:8000/api/users/1" , {
             headers: {
                 accept: "application/json",
                 "Content-type": "application/json"
